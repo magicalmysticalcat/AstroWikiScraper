@@ -1,21 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using WikiClientLibrary.Client;
 using WikiClientLibrary.Generators;
 using WikiClientLibrary.Pages;
 using WikiClientLibrary.Pages.Queries;
 using WikiClientLibrary.Sites;
-using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
-namespace WikiScraper
+namespace WikiScraper.ScrapingServices
 {
-    public class Client : IScrappyClient
+    public class ScrappyService : IScrapingService
     {
         private const string _astroWikiUrl = "https://www.astro.com/wiki/astro-databank/api.php";
 

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WikiScraper
+namespace WikiScraper.ScrapingServices
 {
-    public interface IScrappyClient
+    public interface IScrapingService
     {
         Task<IEnumerable<AstroWikiContent>> FetchItems(int amountOfItems);
         void DumpData(string filePath, IEnumerable<AstroWikiContent> content);

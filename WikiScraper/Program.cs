@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Net.Http;
-using WikiClientLibrary.Client;
-using WikiClientLibrary.Sites;
+using Autofac;
+using WikiScraper.ScrapingServices;
 
 namespace WikiScraper
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
-            var client = new Client();
-            client.ProcessPages("./scrappedData.json",50);
-            Console.ReadLine();
+            Configuration.LoadAppSettings();
+            Configuration.CompositionRoot().Resolve<Application>().Run();
+            Configuration.CreateMapper();
         }
     }
 }
