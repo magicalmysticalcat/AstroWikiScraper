@@ -14,7 +14,10 @@ namespace WikiScraper
 
         public void Run()
         {
-            _scrapingService.ProcessPages(50);
+            var numberOfItemsToExtract = Convert.ToInt32(Configuration
+                .ConfigurationRoot
+                .GetSection("ExtractionDetails")["AmountOfItemsToExtract"]);
+            _scrapingService.ProcessPages(numberOfItemsToExtract);
             Console.ReadLine();
         }
     }
