@@ -19,7 +19,7 @@ namespace WikiScraper.ScrapingServices
     {
         private readonly IRepository _repository;
         private readonly IParser _parser;
-        private readonly string _astroWikiUrl;// = "https://www.astro.com/wiki/astro-databank/api.php";
+        private readonly string _astroWikiUrl;
 
         public ScrappyService(IRepository repository,
             IParser parser,
