@@ -1,9 +1,16 @@
 using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace WikiScraper.Parsers
 {
     public class AstroParser: IParser
     {
+        private ILogger _logger;
+
+        public AstroParser(ILogger logger)
+        {
+            _logger = logger;
+        }
         public AstroWikiContent Parse(string content)
         {
             var normalizedContent = new AstroWikiContent();

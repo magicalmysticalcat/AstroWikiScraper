@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Logging;
 using WikiScraper.Models;
 
 namespace WikiScraper.Repositories
@@ -11,9 +13,16 @@ namespace WikiScraper.Repositories
         public DbSet<Event> Events { get; set; }
         private readonly string _connectionString;
         private static bool _created = false;
-        public SqlLiteRepository(string connectionString)
+        private ILogger _logger;
+
+        public SqlLiteRepository(ILogger logger, string connectionString)
         {
             _connectionString = connectionString;
+            _logger = logger;
+        }
+
+        private void Setup()
+        {
             if (!_created)
             {
                 _created = true;
@@ -44,7 +53,7 @@ namespace WikiScraper.Repositories
             }
             catch (Exception ex)
             {
-                
+                _logger.LogError(ex,"something went wrong in the SQLite repository");
             }
         }
     }

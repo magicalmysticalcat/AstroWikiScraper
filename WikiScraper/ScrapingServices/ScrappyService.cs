@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using WikiClientLibrary.Client;
 using WikiClientLibrary.Generators;
@@ -19,14 +20,17 @@ namespace WikiScraper.ScrapingServices
     {
         private readonly IRepository _repository;
         private readonly IParser _parser;
+        private readonly ILogger _logger;
         private readonly string _astroWikiUrl;
 
         public ScrappyService(IRepository repository,
             IParser parser,
+            ILogger logger,
             string astroWikiUrl)
         {
             _repository = repository;
             _parser = parser;
+            _logger = logger;
             _astroWikiUrl = astroWikiUrl;
         }
 
@@ -55,7 +59,8 @@ namespace WikiScraper.ScrapingServices
             }
             catch (Exception ex)
             {
-                throw new Exception("Something when wrong while fetching!", ex);
+                _logger.LogError(ex,"something went wrong while fetching!");
+                throw;
             }
         }
     }

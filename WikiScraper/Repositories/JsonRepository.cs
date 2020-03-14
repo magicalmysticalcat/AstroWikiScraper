@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using WikiScraper.Models;
 
@@ -8,8 +9,14 @@ namespace WikiScraper.Repositories
     public class JsonRepository:IRepository
     {
         private readonly string _filePath;
-        public JsonRepository(string filePath) => _filePath = filePath;
-        
+        private ILogger _logger;
+
+        public JsonRepository(ILogger logger, string filePath)
+        {
+            _logger = logger;
+            _filePath = filePath;
+        }
+
         public void Save(Event item)
         {
             throw new System.NotImplementedException();

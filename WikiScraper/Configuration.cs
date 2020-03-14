@@ -4,6 +4,7 @@ using System.IO;
 using Autofac;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using WikiScraper.Models;
 using WikiScraper.Parsers;
 using WikiScraper.Repositories;
@@ -34,6 +35,16 @@ namespace WikiScraper
             builder.RegisterType<ScrappyService>()
                 .As<IScrapingService>()
                 .WithParameter(new NamedParameter("astroWikiUrl", astroWikiUrl));
+            
+            var loggerFactory = LoggerFactory.Create(b =>
+            {
+                b.AddFilter("Microsoft", LogLevel.Warning)
+                    .AddFilter("System", LogLevel.Warning)
+                    .AddFilter("WikiScraper.Program", LogLevel.Debug)
+                    .AddConsole();
+            });
+            var logger = loggerFactory.CreateLogger<Program>();
+            builder.RegisterInstance(logger).As<ILogger>();
 
             builder.RegisterType<AstroParser>().As<IParser>();
             
