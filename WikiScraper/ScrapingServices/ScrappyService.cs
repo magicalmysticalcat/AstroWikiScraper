@@ -9,7 +9,7 @@ using WikiClientLibrary.Generators;
 using WikiClientLibrary.Pages;
 using WikiClientLibrary.Pages.Queries;
 using WikiClientLibrary.Sites;
-using WikiScraper.DTOs;
+using WikiScraper.Models;
 using WikiScraper.Parsers;
 using WikiScraper.Repositories;
 
@@ -36,7 +36,7 @@ namespace WikiScraper.ScrapingServices
             _repository.Save(items);
         } 
         
-        public async Task<IEnumerable<NormalisedAstroWikiContentDto>> FetchItems(int amountOfItems)
+        public async Task<IEnumerable<Event>> FetchItems(int amountOfItems)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace WikiScraper.ScrapingServices
                 var pages = await allPages.EnumPagesAsync(provider).Take(amountOfItems).ToList();
 
                 return pages.Select(page => 
-                    Configuration.Mapper.Map<NormalisedAstroWikiContentDto>(_parser.Parse(page.Content))).ToList();
+                    Configuration.Mapper.Map<Event>(_parser.Parse(page.Content))).ToList();
             }
             catch (Exception ex)
             {

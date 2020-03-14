@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using WikiScraper.DTOs;
+using WikiScraper.Models;
 
 namespace WikiScraper.Repositories
 {
@@ -10,12 +10,12 @@ namespace WikiScraper.Repositories
         private readonly string _filePath;
         public JsonRepository(string filePath) => _filePath = filePath;
         
-        public void Save(NormalisedAstroWikiContentDto item)
+        public void Save(Event item)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Save(IEnumerable<NormalisedAstroWikiContentDto> items)
+        public void Save(IEnumerable<Event> items)
         {
             if (_filePath != null) 
                 File.WriteAllText(_filePath, JsonConvert.SerializeObject(items));

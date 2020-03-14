@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Autofac;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
-using WikiScraper.DTOs;
+using WikiScraper.Models;
 using WikiScraper.Parsers;
 using WikiScraper.Repositories;
 using WikiScraper.ScrapingServices;
@@ -19,12 +20,16 @@ namespace WikiScraper
             var builder = new ContainerBuilder();
             
             builder.RegisterType<Application>();
-            
+            /*
             var dumpToFilePath = ConfigurationRoot.GetSection("ExtractionDetails")["ExtractionFilePath"];
             builder.RegisterType<JsonRepository>()
                 .As<IRepository>()
-                .WithParameter(new NamedParameter("filePath", dumpToFilePath));
-            
+                .WithParameter(new NamedParameter("filePath", dumpToFilePath));*/
+            var connectionString = ConfigurationRoot.GetConnectionString("astroEventsDb");
+            builder.RegisterType<SqlLiteRepository>()
+                .As<IRepository>()
+                .WithParameter(new NamedParameter("connectionString", connectionString));
+
             var astroWikiUrl = ConfigurationRoot.GetSection("ExtractionDetails")["AstroWikiAPIUrl"];
             builder.RegisterType<ScrappyService>()
                 .As<IScrapingService>()
@@ -40,8 +45,8 @@ namespace WikiScraper
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<AstroWikiContent, NormalisedAstroWikiContentDto>()
-                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.DatamainID))
+                cfg.CreateMap<AstroWikiContent, Event>()
+                    .ForMember(dest => dest.AstroId, opt => opt.MapFrom(src => src.DatamainID))
                     .ForMember(dest => dest.FriendlyName, opt => opt.MapFrom(src => src.sflname))
                     .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.sbdate))
                     .ForMember(dest => dest.FriendlyDate, opt => opt.MapFrom(src => src.sbdate_dmy))

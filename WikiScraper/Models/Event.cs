@@ -1,10 +1,12 @@
 using System;
 
-namespace WikiScraper.DTOs
+namespace WikiScraper.Models
 {
-    public class NormalisedAstroWikiContentDto
+    public class Event
     {
-        public string Id { get; set; }
+        public Event() => Id = Guid.NewGuid();
+        public Guid Id { get; set; }
+        public string AstroId { get; set; }
         public string Name { get; set; }
         public string FriendlyName { get; set; }
         public string Date { get; set; }
