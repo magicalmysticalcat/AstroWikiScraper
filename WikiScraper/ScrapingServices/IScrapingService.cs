@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WikiScraper.DTOs;
 
 namespace WikiScraper.ScrapingServices
 {
     public interface IScrapingService
     {
-        Task<IEnumerable<AstroWikiContent>> FetchItems(int amountOfItems);
-        void DumpData(string filePath, IEnumerable<AstroWikiContent> content);
-        AstroWikiContent ParseContent(string content);
-        Task ProcessPages(string dumpingFilePath, int amountOfPages);
+        Task<IEnumerable<NormalisedAstroWikiContentDto>> FetchItems(int amountOfItems);
+        Task ProcessPages(int amountOfPages);
     }
 }

@@ -9,71 +9,54 @@ using WikiClientLibrary.Generators;
 using WikiClientLibrary.Pages;
 using WikiClientLibrary.Pages.Queries;
 using WikiClientLibrary.Sites;
+using WikiScraper.DTOs;
+using WikiScraper.Parsers;
+using WikiScraper.Repositories;
 
 namespace WikiScraper.ScrapingServices
 {
     public class ScrappyService : IScrapingService
     {
-        private const string _astroWikiUrl = "https://www.astro.com/wiki/astro-databank/api.php";
+        private readonly IRepository _repository;
+        private readonly IParser _parser;
+        private readonly string _astroWikiUrl;// = "https://www.astro.com/wiki/astro-databank/api.php";
 
-        public async Task ProcessPages(string dumpingFilePath, int amountOfPages)
+        public ScrappyService(IRepository repository,
+            IParser parser,
+            string astroWikiUrl)
+        {
+            _repository = repository;
+            _parser = parser;
+            _astroWikiUrl = astroWikiUrl;
+        }
+
+        public async Task ProcessPages(int amountOfPages)
         {
             var items = await FetchItems(amountOfPages);
-            DumpData(dumpingFilePath, items);
+            _repository.Save(items);
         } 
         
-        public async Task<IEnumerable<AstroWikiContent>> FetchItems(int amountOfItems)
+        public async Task<IEnumerable<NormalisedAstroWikiContentDto>> FetchItems(int amountOfItems)
         {
             try
             {
-                var normalizedPages = new List<AstroWikiContent>();
                 var client = new WikiClient();
                 var wikiSite = new WikiSite(client,_astroWikiUrl);
                 
                 await wikiSite.Initialization;
 
                 var allPages = new AllPagesGenerator(wikiSite);
-
+                
                 var provider = WikiPageQueryProvider.FromOptions(PageQueryOptions.FetchContent);
                 var pages = await allPages.EnumPagesAsync(provider).Take(amountOfItems).ToList();
-                
-                foreach (var page in pages)
-                {
-                    var normalizedContent = ParseContent(page.Content);
-                    normalizedPages.Add(normalizedContent);
-                }
 
-                return normalizedPages;
+                return pages.Select(page => 
+                    Configuration.Mapper.Map<NormalisedAstroWikiContentDto>(_parser.Parse(page.Content))).ToList();
             }
             catch (Exception ex)
             {
                 throw new Exception("Something when wrong while fetching!", ex);
             }
-        }
-
-        public void DumpData(string filePath, IEnumerable<AstroWikiContent> content) => 
-            File.WriteAllText(filePath, JsonConvert.SerializeObject(content));
-
-        public AstroWikiContent ParseContent(string content)
-        {
-            var normalizedContent = new AstroWikiContent();
-            var normalizedContentProps = normalizedContent.GetType().GetProperties();
-            var splitProperties = content.Split('|');
-            if (splitProperties != null)
-            {
-                foreach (var propStringified in splitProperties)
-                {
-                    var prop = propStringified.Split('=');
-                    if (prop != null)
-                    {
-                        var property =
-                            normalizedContentProps.FirstOrDefault(p => p.Name.ToLower() == prop[0].ToLower());
-                        if (property != null) 
-                            property.SetValue(normalizedContent, prop[1]);
-                    }
-                }
-            }
-            return normalizedContent;
         }
     }
 }

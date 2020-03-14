@@ -8,9 +8,8 @@ namespace WikiScraper
     {
         static void Main(string[] args)
         {
-            Configuration.LoadAppSettings();
-            Configuration.CompositionRoot().Resolve<Application>().Run();
             Configuration.CreateMapper();
+            Configuration.CompositionRoot().Resolve<Application>().Run();
         }
     }
 }

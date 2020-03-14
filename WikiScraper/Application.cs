@@ -14,11 +14,7 @@ namespace WikiScraper
 
         public void Run()
         {
-            var extractionDetails = Configuration.ConfigurationRoot.GetSection("ExtractionDetails");
-            var extractionFilePath = extractionDetails["ExtractionFilePath"];
-            var amountOfPages = Convert.ToInt32(extractionDetails["AmountOfPagesToExtract"]);
-            
-            _scrapingService.ProcessPages(extractionFilePath,amountOfPages);
+            _scrapingService.ProcessPages(50);
             Console.ReadLine();
         }
     }
