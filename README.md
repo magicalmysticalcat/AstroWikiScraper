@@ -1,4 +1,5 @@
-![.NET Core](https://github.com/magicalmysticalcat/AstroWikiScraper/workflows/.NET%20Core/badge.svg?branch=master&event=check_run)
+![.NET Core](https://github.com/magicalmysticalcat/AstroWikiScraper/workflows/.NET%20Core/badge.svg?branch=master)
+
 
 # Astro Wiki Scraper
 
