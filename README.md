@@ -1,3 +1,5 @@
+![.NET Core](https://github.com/magicalmysticalcat/AstroWikiScraper/workflows/.NET%20Core/badge.svg?branch=master&event=check_run)
+
 # Astro Wiki Scraper
 
 AstroWikiScraper is a .NET Core console project for scraping data from the astro.com wiki.
