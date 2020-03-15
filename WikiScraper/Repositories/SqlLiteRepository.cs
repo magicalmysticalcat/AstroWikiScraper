@@ -19,6 +19,7 @@ namespace WikiScraper.Repositories
         {
             _connectionString = connectionString;
             _logger = logger;
+            Setup();
         }
 
         private void Setup()
