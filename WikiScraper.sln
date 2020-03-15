@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiScraper", "WikiScraper\WikiScraper.csproj", "{55B3D66F-7213-4E5F-8242-A8494F337E58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{4B9AD960-C67A-4878-B841-E1849DD2B5D5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,9 +12,5 @@ Global
 		{55B3D66F-7213-4E5F-8242-A8494F337E58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55B3D66F-7213-4E5F-8242-A8494F337E58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55B3D66F-7213-4E5F-8242-A8494F337E58}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B9AD960-C67A-4878-B841-E1849DD2B5D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B9AD960-C67A-4878-B841-E1849DD2B5D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B9AD960-C67A-4878-B841-E1849DD2B5D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B9AD960-C67A-4878-B841-E1849DD2B5D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
