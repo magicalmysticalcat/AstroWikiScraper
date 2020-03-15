@@ -27,7 +27,7 @@ namespace WikiScraper
                 .As<IRepository>()
                 .WithParameter(new NamedParameter("filePath", dumpToFilePath));*/
             var connectionString = ConfigurationRoot.GetConnectionString("astroEventsDb");
-            builder.RegisterType<SqlLiteRepository>()
+            builder.RegisterType<SqliteRepository>()
                 .As<IRepository>()
                 .WithParameter(new NamedParameter("connectionString", connectionString));
 

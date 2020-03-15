@@ -8,14 +8,14 @@ using WikiScraper.Models;
 
 namespace WikiScraper.Repositories
 {
-    public sealed class SqlLiteRepository: DbContext, IRepository
+    public sealed class SqliteRepository: DbContext, IRepository
     {
         public DbSet<Event> Events { get; set; }
         private readonly string _connectionString;
         private static bool _created = false;
         private ILogger _logger;
 
-        public SqlLiteRepository(ILogger logger, string connectionString)
+        public SqliteRepository(ILogger logger, string connectionString)
         {
             _connectionString = connectionString;
             _logger = logger;
